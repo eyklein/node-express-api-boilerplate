@@ -1,0 +1,92 @@
+<form id="newParticipant" method="POST">
+  First Name:<br>
+  <input type="text" id="f_name" name="f_name" placeholder="First Name" value={{f_name}}><br>
+  Last Name:<br>
+  <input type="text" id="l_name" name="l_name" placeholder="Last Name" value={{l_name}}><br>
+  New User ID:<br>
+  <input type="text" id="_id" name="_id" placeholder="User ID"><br>
+  Password:<br>
+  <input type="password" id="password" name="password" placeholder="Password"><br>
+  Birth Date (mm/dd/yyyy):<br>
+  <input type="text" id="birth_date" name="birth_date" placeholder="(mm/dd/yyyy)"><br>
+  email:<br>
+  <input type="text" id="email" name="email" placeholder="Enter Email"><br>
+  <input type="text" id="gender" name="gender" placeholder="Gender"><br>
+
+  <input type="submit" value="Submit">
+</form>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+<script type="text/javascript">
+
+//add new partisipant
+$("#newParticipant").submit(function(e){
+  //console.log(e);
+
+  var f_name = $("#f_name").val();
+  var l_name = $("#l_name").val();
+  var _id = $("#_id").val();
+  var password = $("#password").val();
+  var birth_date = $("#birth_date").val();
+  var email = $("#email").val();
+  var gender = $("#gender").val();
+  
+  
+  var data = {
+      f_name : f_name,
+      l_name : l_name,
+      _id : _id,
+      password : password,
+      description: {
+        birth_date: birth_date,
+        gender: gender
+      },
+      email: email
+    };
+
+    //console.log(data);
+
+  jQuery.ajax({
+    url : '/api/create',
+    dataType : 'json',
+    type : 'POST',
+    data : data,
+    success : function(response){
+        // success
+        console.log('success in posting');
+        console.log(response);
+        // now, clear the input fields
+        // jQuery("#candidateForm input").val('');
+    },
+    error : function(err){
+      // do error checking
+      alert("something went wrong");
+      console.error(err);
+    }
+  });
+
+  // prevents the form from submitting normally
+  e.preventDefault();
+  return false;
+
+})
+</script>
+
+
+
+<!-- var participantSchema = new Schema({
+  name: String,
+  // name: {type: String, required: true}, // this version requires this field to exist
+  // name: {type: String, unique: true}, // this version requires this field to be unique in the db
+  //age: Number,
+  tags: [String],
+  description: {
+    age: Number,
+    birth_date: Date,
+    gender: String
+  },
+  email: String,
+  dateAdded : { type: Date, default: Date.now },
+}) -->

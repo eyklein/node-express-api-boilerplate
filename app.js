@@ -6,8 +6,17 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var env = require('node-env-file');
+var exphbs=require('express-handlebars');
+var expressValidator=require('express-validator');
+var flash = require('connect-flash');
+var session = require('express-session');
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
+var mongo = require('mongodb')
 
 var app = express();
+
+
 
 // if in development mode, load .env variables
 if (app.get("env") === "development") {
@@ -20,9 +29,16 @@ app.db = mongoose.connect(process.env.MONGODB_URI);
 // view engine setup - this app uses Hogan-Express
 // https://github.com/vol4ok/hogan-express
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'html');
-app.set('layout','layout');
-app.engine('html', require('hogan-express'));;
+
+//handlebars
+app.engine('handlebars', exphbs({defaultLayout: 'layout'}));
+app.set('view engine', 'handlebars');
+
+
+//html
+//app.set('view engine', 'html');
+//app.set('layout','layout');
+//app.engine('html', require('hogan-express'));
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -32,8 +48,46 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+//???
+app.use(session({
+  secret: 'secret',
+  saveUninitialized: true,
+  resave:true
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+// In this example, the formParam value is going to get morphed into form body format useful for printing.
+app.use(expressValidator({
+  errorFormatter: function(param, msg, value) {
+      var namespace = param.split('.')
+      , root    = namespace.shift()
+      , formParam = root;
+
+    while(namespace.length) {
+      formParam += '[' + namespace.shift() + ']';
+    }
+    return {
+      param : formParam,
+      msg   : msg,
+      value : value
+    };
+  }
+}));
+
+app.use(flash());
+
+app.use(function(req, res, next){
+  res.locals.success_msg = req.flash('success_msg');
+  res.locals.error_msg = req.flash('error_msg');
+  res.locals.error = req.flash('error');
+  next();
+});
+
 // our routes will be contained in routes/index.js
 var routes = require('./routes/index');
+var users = require('./routes/users')
 app.use('/', routes);
 
 // catch 404 and forward to error handler
