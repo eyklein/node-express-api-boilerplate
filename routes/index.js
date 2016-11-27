@@ -7,6 +7,9 @@ var encrypt = require('mongoose-encryption');
 var passport=require('passport');
 var LocalStrategy=require('passport-local').Strategy;
 
+// var bodyParser = require( 'body-parser' );
+// app.use( bodyParser.urlencoded({ extended: true }) );
+
 
 // our db model
 //var Participant = require("../models/model.js");
@@ -401,14 +404,19 @@ router.post('/register', function(req, res){
     // })  
 });
 
-passport.use(new LocalStrategy(
-  function(email, password, done) {
+passport.use(new LocalStrategy({
+  usernameField: 'email',
+  passwordField: 'password'
+  },function(email, password, done) {
     User.getUserByEmail(email,function(err,user){
       if(err) throw err;
       if(!user){
         return done(null, false, {message: 'Unknown User'});
       }
-
+      console.log(user);
+      console.log("****");
+      console.log(user.password);
+      console.log("****");
       User.comparePassword(password, user.password, function(err, isMatch){
         if(err) throw err;
         if(isMatch){
