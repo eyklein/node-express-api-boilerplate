@@ -1,20 +1,17 @@
-<h2 class="page-header">New User</h2>
-<form id="newUser" method="POST">
+<h2 class="page-header">Log In</h2>
+
+{{#if errors}}
+	{{#each errors}}
+		<div class='alert alert-danger'>{{msg}}</div>
+	{{/each}}
+{{/if}}
+<form id="LogIn" method="POST">
 	<div class="form-group">
-		
-		<label>First Name:</label>
-		<input type="text" id="f_name" name="first-name" class="form-control" vcard_name="vCard.FirstName" placeholder="First Name" value={{f_name}}><br>
-		<label>Last Name:</label>
-		<input type="text" id="l_name" name="last-name" class="form-control" vcard_name="vCard.LastName" placeholder="Last Name" value={{l_name}}><br>
 		<label>Email:</label>
-		<input type="text" id="email" name="email" class="form-control" placeholder="Enter Email"><br>
+		<input type="text" id="email" name="email" class="form-control" placeholder="Email" value={{fields.email}}><br>
 		<label>Password:</label>
 		<input type="password" id="password" class="form-control" name="password" placeholder="Password"><br>
-		<label>Birth Date (mm/dd/yyyy):</label>
-		<input type="text" id="birth_date" class="form-control" name="birthday" placeholder="(mm/dd/yyyy)"><br>
-		<label>Gender: </label>
-		<input type="text" id="gender" class="form-control" name="gender" placeholder="Gender"><br>
-		<input type="submit" value="Submit">
+		<input type="submit" value="Submit" >
 	</div>
 </form>
 
@@ -23,53 +20,4 @@
 
 <script type="text/javascript">
 
-//add new partisipant
-$("#newUser").submit(function(e){
-  //console.log(e);
-
-  var f_name = $("#f_name").val();
-  var l_name = $("#l_name").val();
-  var email = $("#email").val();
-  var password = $("#password").val();
-  var birth_date = $("#birth_date").val();
-  var gender = $("#gender").val();
-  
-  
-  var data = {
-      f_name : f_name,
-      l_name : l_name,
-      email: email,
-      password : password,
-      description: {
-        birth_date: birth_date,
-        gender: gender
-      }
-    };
-
-    //console.log(data);
-
-  jQuery.ajax({
-    url : '/api/create',
-    dataType : 'json',
-    type : 'POST',
-    data : data,
-    success : function(response){
-        // success
-        console.log('success in posting');
-        console.log(response);
-        // now, clear the input fields
-        // jQuery("#candidateForm input").val('');
-    },
-    error : function(err){
-      // do error checking
-      alert("something went wrong");
-      console.error(err);
-    }
-  });
-
-  // prevents the form from submitting normally
-  e.preventDefault();
-  return false;
-
-})
 </script>

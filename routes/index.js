@@ -3,6 +3,11 @@ var router = express.Router();
 var mongoose = require('mongoose');
 var encrypt = require('mongoose-encryption');
 
+
+var passport=require('passport');
+var LocalStrategy=require('passport-local').Strategy;
+
+
 // our db model
 //var Participant = require("../models/model.js");
 var User = require("../models/user.js");
@@ -309,9 +314,24 @@ router.post('/register', function(req, res){
 
 
     req.checkBody('name', 'Name is required').notEmpty();
-    req.checkBody('email', 'Email is required').notEmpty();
+    req.checkBody({
+      'email': {
+        notEmpty: true,
+        errorMessage: 'Must enter an email',
+        optional: {
+          options: { checkFalsy: true } // end here if not email no need to return more errors
+        },
+        isLength: {
+          options: [{ min: 2, max: 40 }],
+          errorMessage: 'email be between at least 2 chars long' // Error message for the validator, takes precedent over parameter message
+        },
+        isEmail: {
+          errorMessage: 'Invalid Email'
+        }
+      }
+    });
     req.checkBody('password', 'Password is required').notEmpty();
-    req.checkBody('password2', 'Passwords do not match').equals(password);
+    req.checkBody('password2', 'Passwords must match').equals(password);
 
 
     var errors = req.validationErrors();
@@ -319,7 +339,11 @@ router.post('/register', function(req, res){
 
     if(errors){
       console.log('render error!!!!')
-      return res.json(errors);
+      //return res.json(errors);
+      return res.render('register',{
+        errors:errors,
+        fields:newUserObj
+      });
       //res.json(errors);
       //return res.render('register');
     }else{
@@ -330,28 +354,169 @@ router.post('/register', function(req, res){
     // create a new user model instance, passing in the object
     var newUser = new User(newUserObj);
 
+    //in the model 
+    User.createUser(newUser, function(err,user){
+      // req.flash('error_msg', 'Sorry there was an error saving the adminostrator has been contacted');
+      // console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!?");
+      //return res.redirect('register');
+      if(err){throw err;}
+      console.log(user)
+
+      //   ,{
+      //   errors:errors,
+      //   fields:newUserObj
+      //});
+    });
+
+    req.flash('success_msg', 'You are registered and can now login');
+    return res.render('login',{fields:newUserObj});
+
+    //whats the diff between render and redirect!!!!?
+
     // now, save that animal instance to the database
     // mongoose method, see http://mongoosejs.com/docs/api.html#model_Model-save    
-    newUser.save(function(err,data){
-      // if err saving, respond back with error
-      if (err){
-        var error = {status:'ERROR', message: 'Error registering to database', info: err};
-        return res.json(error);
-      }
+    
 
-      // console.log('saved a new partisipant!');
-      // console.log(data);
 
-      // now return the json data of the new partisipant
-      var jsonData = {
-        status: 'OK',
-        partisipant: data
-      }
 
-      return res.json(jsonData);
 
-    })  
+    // newUser.save(function(err,data){
+    //   // if err saving, respond back with error
+    //   if (err){
+    //     var error = {status:'ERROR', message: 'Error registering to database', info: err};
+    //     return res.json(error);
+    //   }
+
+    //   // console.log('saved a new partisipant!');
+    //   // console.log(data);
+
+    //   // now return the json data of the new partisipant
+    //   var jsonData = {
+    //     status: 'OK',
+    //     partisipant: data
+    //   }
+
+    //   return res.json(jsonData);
+
+    // })  
 });
+
+passport.use(new LocalStrategy(
+  function(email, password, done) {
+    User.getUserByEmail(email,function(err,user){
+      if(err) throw err;
+      if(!user){
+        return done(null, false, {message: 'Unknown User'});
+      }
+
+      User.comparePassword(password, user.password, function(err, isMatch){
+        if(err) throw err;
+        if(isMatch){
+          return done(null, user);
+        }else{
+          return done(null, false, {message: 'Invalid Password'});
+        }
+      })
+    });
+  }
+));
+
+
+
+
+passport.serializeUser(function(user, done) {
+  done(null, user.email);
+});
+
+passport.deserializeUser(function(id, done) {
+  User.getUserByEmail(id, function(err, user) {
+    done(err, user);
+  });
+});
+
+router.post('/login',
+  passport.authenticate('local', {successRedirect:'/', failureRedirect:'login', failureFlash:true}),
+  function(req, res) {
+    // If this function gets called, authentication was successful.
+    // `req.user` contains the authenticated user.
+
+    console.log("444444?");
+    res.redirect('/');
+  });
+
+// router.post('/login', function(req, res){
+    
+//     var email = req.body.email;
+//     var password = req.body.password;
+    
+
+
+
+
+//     // hold all this data in an object
+//     // this object should be structured the same way as your db model
+//     var logInCredentials = {
+//       email: email,
+//       password : password,
+//     };
+
+
+//     req.checkBody('email', 'Email is required').notEmpty();
+//     req.checkBody('password', 'Password is required').notEmpty();
+    
+
+
+//     var errors = req.validationErrors();
+
+
+//     if(errors){
+//       console.log('render error!!!!')
+//       //return res.json(errors);
+//       return res.render('login',{
+//         errors:errors,
+//         fields:logInCredentials
+//       });
+//       //res.json(errors);
+//       //return res.render('register');
+//     }else{
+//       console.log("PASSED")
+//     }
+
+
+//     // create a new user model instance, passing in the object
+//     // var newUser = new User(newUserObj);
+
+//     // now, save that animal instance to the database
+//     // mongoose method, see http://mongoosejs.com/docs/api.html#model_Model-save    
+    
+
+
+
+//     newUser.save(function(err,data){
+//       // if err saving, respond back with error
+//       if (err){
+//         var error = {status:'ERROR', message: 'Error registering to database', info: err};
+//         //return res.json(error);
+//         req.flash('error_msg', 'Sorry');
+//         res.redirect('login');
+//       }
+
+//       // console.log('saved a new partisipant!');
+//       // console.log(data);
+
+//       // now return the json data of the new partisipant
+//       var jsonData = {
+//         status: 'OK',
+//         partisipant: data
+//       }
+
+//       req.flash('success_msg', 'Thank you');
+//       res.redirect('login');
+
+//       //return res.json(jsonData);
+
+//     })  
+// });
 
 /**
  * GET '/api/delete/:id'

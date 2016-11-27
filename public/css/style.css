@@ -65,6 +65,7 @@ body {
   .header,
   .marketing,
   .footer {
+  	z-index: 10;
     padding-right: 0;
     padding-left: 0;
   }
@@ -76,6 +77,10 @@ body {
   .jumbotron {
     border-bottom: 0;
   }
+}
+
+.page-content{
+	z-index: 100;
 }
 
 
@@ -121,7 +126,9 @@ body {
     text-decoration: none;
     display: block;
     text-align: right;
+    z-index: 999999;
 }
+
 .grouped-content{
 	padding: 0px;
 	margin: 0px;

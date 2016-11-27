@@ -2,25 +2,24 @@
 
 {{#if errors}}
 	{{#each errors}}
-		<div class='alert alert-danger'>{{msg}}
+		<div class='alert alert-danger'>{{msg}}</div>
 	{{/each}}
 {{/if}}
 <form id="newUser" method="POST">
 	<div class="form-group">
-		
 		<label>Name:</label>
-		<input type="text" id="name" name="name" class="form-control" vcard_name="vCard.FirstName" placeholder="First Last" value={{name}}>
+		<input type="text" id="name" name="name" class="form-control" vcard_name="vCard.FirstName" placeholder="First Last" value={{fields.name}}><br>
 		<label>Email:</label>
-		<input type="text" id="email" name="email" class="form-control" placeholder="Email"><br>
+		<input type="text" id="email" name="email" class="form-control" placeholder="Email" value={{fields.email}}><br>
 		<label>Password:</label>
-		<input type="password" id="password" class="form-control" name="password" placeholder="Password"><br>
+		<input type="password" id="password" class="form-control" name="password" placeholder="Password" value={{fields.password}}><br>
 		<label>Confirm Password:</label>
 		<input type="password" id="password2" class="form-control" name="password2" placeholder="Password"><br>
 		<label>Birth Date (mm/dd/yyyy):</label>
-		<input type="text" id="birth_date" class="form-control" name="birthday" placeholder="(mm/dd/yyyy)"><br>
+		<input type="text" id="birth_date" class="form-control" name="birthday" placeholder="(mm/dd/yyyy)" value={{fields.birth_date}}><br>
 		<label>Gender: </label>
 		<input type="text" id="gender" class="form-control" name="gender" placeholder="Gender"><br>
-		<input type="submit" value="Submit">
+		<input type="submit" value="Submit" >
 	</div>
 </form>
 
@@ -30,51 +29,51 @@
 <script type="text/javascript">
 
 //add new partisipant
-$("#newUser").submit(function(e){
-  //console.log(e);
+// $("#newUser").submit(function(e){
+//   //console.log(e);
 
-  var name = $("#name").val();
-  var email = $("#email").val();
-  var password = $("#password").val();
-  var password2 = $("#password2").val();
-  var birth_date = $("#birth_date").val();
-  var gender = $("#gender").val();
+//   var name = $("#name").val();
+//   var email = $("#email").val();
+//   var password = $("#password").val();
+//   var password2 = $("#password2").val();
+//   var birth_date = $("#birth_date").val();
+//   var gender = $("#gender").val();
   
   
-  var data = {
-      name : name,
-      email: email,
-      password : password,
-      description: {
-        birth_date: birth_date,
-        gender: gender
-      }
-    };
+//   var data = {
+//       name : name,
+//       email: email,
+//       password : password,
+//       description: {
+//         birth_date: birth_date,
+//         gender: gender
+//       }
+//     };
 
-    //console.log(data);
+//     //console.log(data);
 
-  jQuery.ajax({
-    url : '/register',
-    dataType : 'json',
-    type : 'POST',
-    data : data,
-    success : function(response){
-        // success
-        console.log('ajax success');
-        console.log(response);
-        // now, clear the input fields
-        // jQuery("#candidateForm input").val('');
-    },
-    error : function(err){
-      // do error checking
-      //alert("ajax error!!");
-      console.error(err);
-    }
-  });
+//   jQuery.ajax({
+//     url : '/register',
+//     dataType : 'json',
+//     type : 'POST',
+//     data : data,
+//     success : function(response){
+//         // success
+//         console.log('ajax success');
+//         console.log(response);
+//         // now, clear the input fields
+//         // jQuery("#candidateForm input").val('');
+//     },
+//     error : function(err){
+//       // do error checking
+//       //alert("ajax error!!");
+//       console.error(err);
+//     }
+//   });
 
-  // prevents the form from submitting normally
-  e.preventDefault();
-  return false;
+//   // prevents the form from submitting normally
+//   e.preventDefault();
+//   return false;
 
-})
+// })
 </script>

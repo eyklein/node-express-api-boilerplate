@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 var encrypt = require('mongoose-encryption');
 var Schema = mongoose.Schema;
+var bcrypt=require('bcryptjs');
 
 var newUserSchema = new mongoose.Schema({
 	name: String,//{type: String, required: true},
@@ -14,4 +15,30 @@ var newUserSchema = new mongoose.Schema({
 })
 
 
-module.exports = mongoose.model('User', newUserSchema);
+var User = module.exports = mongoose.model('User', newUserSchema);
+
+module.exports.createUser = function(newUser, callBack){
+	bcrypt.genSalt(10, function(err, salt) {
+	    bcrypt.hash(newUser.password, salt, function(err, hash) {
+	        newUser.password=hash;
+	        newUser.save(callBack);
+	    });
+	});
+}
+
+module.exports.getUserByEmail = function(email, callBack){
+	var query = {email: email};
+	User.FindOne(query, callBack);
+}
+
+module.exports.comparePassword = function(candidatePassword, hash, callBack){
+	bcrypt.compare(candidatePassword, hash, function(err, isMatch){
+		if(err) throw err;
+		callback(null, isMatch);
+	})
+}
+
+// module.exports.getUserById = function(id, callBack){
+	
+// 	User.FindById(id, callBack);
+// }
