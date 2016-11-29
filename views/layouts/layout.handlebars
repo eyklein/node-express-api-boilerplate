@@ -3,32 +3,34 @@
 	<title>Well of Being</title>
 	<link rel="stylesheet" href="/css/bootstrap.css"/>
 	<link rel="stylesheet" href="/css/style.css"/>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	
+
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.0/TweenMax.min.js"></script>
+
+	
+
+	<script src="//cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.5/ScrollMagic.min.js"></script>
+
+	<script src="//cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.5/plugins/debug.addIndicators.min.js"></script>
+	
+	<script src="//cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.5/plugins/animation.gsap.js"></script>
+	
+	
+	<script type="text/javascript" src="/js/bootstrap.js"/></script>
+	<script type="text/javascript" src="/js/main.js"/></script>
 	<script type="text/javascript">
-	/* When the user clicks on the button, 
-toggle between hiding and showing the dropdown content */
-function myFunction() {
-	document.getElementById("myDropdown").classList.toggle("show");
-}
-
-// Close the dropdown menu if the user clicks outside of it
-window.onclick = function(event) {
-	if (!event.target.matches('.dropbtn')) {
-
-		var dropdowns = document.getElementsByClassName("dropdown-content");
-		var i;
-		for (i = 0; i < dropdowns.length; i++) {
-			var openDropdown = dropdowns[i];
-			if (openDropdown.classList.contains('show')) {
-				openDropdown.classList.remove('show');
-			}
-		}
-	}
-}
 </script>
 </head>
 <body>
 	<div class="container">
-		<div class="header clearfix">
+		<div class="header lock">
+			
+			<div class="navbar-header">
+
+			<img class="navbar-header" src="/img/logo.jpg" width="250px" hight="20px">
+			
+			</div>
 			<nav>
           <!-- <ul class="nav nav-pills pull-right">
             <li role="presentation" class="active"><a href="/">Home</a></li>
@@ -36,40 +38,51 @@ window.onclick = function(event) {
             <li role="presentation"><a href="/users/register">register</a></li>
             <li role="presentation"><a href="/users/logout">logout</a></li>
         </ul> -->
-        <div class="dropdown pull-right">
-        	
-        		<img src="/img/list-icon.png" style="width:40px;height:40px;" onclick="myFunction()" class="dropbtn" src="/img/list-icon.png">
-        	
-        	<div id="myDropdown" class="dropdown-content pull-left" >
-        		<a href="#">Home</a>
-        		<a href="#">About</a>
-        		<a href="/register">Register</a>
-        		<a href="/login">LogIn</a>
-        	</div>
-        </div>
-    </nav>
-    <img src="/img/logo.jpg"/ style="width:200px;height:40px;">
-    <!-- <h3 class="text-muted">Well of Being</h3> -->
-</div>
+	        <div class="dropdown pull-right navbar-header">
+	        	
+	        	<img src="/img/list-icon.png" style="width:40px;height:40px;" onclick="myFunction()" class="dropbtn" src="/img/list-icon.png">
+
+
+
+
+	        	
+	        	<div id="myDropdown" class="dropdown-content" >
+	        		<a href="#">Home</a>
+	        		<a href="#">About</a>
+	        		{{#if user}}
+	        		<a href="/logout">Log Out</a>
+	        		{{else}}
+	        		<a href="/register">Register</a>
+	        		<a href="/login">Log In</a>
+	        		{{/if}}
+	        	</div>
+	        	{{#if user}}
+					<div class=" navbar-header myHeader" >Hi {{user.name}}</div>
+				{{/if}}
+	        </div>
+	    </nav>
+	    
+	    <!-- <h3 class="text-muted">Well of Being</h3> -->
+	</div>
 
 
 
 <div class="row page-content">
 	<div class="col-lg-12">
 		{{#if success_msg}}
-			<div class="alert alert-success">
-				{{success_msg}}
-			</div>
+		<div class="alert alert-success">
+			{{success_msg}}
+		</div>
 		{{/if}}
 		{{#if error_msg}}
-			<div class="alert alert-danger">
-				{{error_msg}}
-			</div>
+		<div class="alert alert-danger">
+			{{error_msg}}
+		</div>
 		{{/if}}
 		{{#if error}}
-			<div class="alert alert-danger">
-				{{error}}
-			</div>
+		<div class="alert alert-danger">
+			{{error}}
+		</div>
 		{{/if}}
 
 		{{{body}}}

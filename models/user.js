@@ -27,14 +27,13 @@ module.exports.createUser = function(newUser, callBack){
 }
 
 module.exports.getUserByEmail = function(email, callBack){
-	console.log("getUserByEmail !!!!!!")
 	var query = {email: email};
 	User.findOne(query, callBack);
 }
 
 module.exports.comparePassword = function(candidatePassword, hash, callBack){
-	console.log("comparePassword !!!!!!")
-	console.log(candidatePassword + " : " + hash)
+	// console.log("comparePassword !!!!!!")
+	// console.log(candidatePassword + " : " + hash)
 	bcrypt.compare(candidatePassword, hash, function(err, isMatch){
 		if(err) throw err;
 		callBack(null, isMatch);

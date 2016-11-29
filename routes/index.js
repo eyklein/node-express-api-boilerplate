@@ -29,6 +29,21 @@ router.get('/', function(req, res) {
   res.render('index');
 });
 
+
+//ensure logged in
+router.get('/dashboard', ensureAuthenticated, function(req, res) {
+  res.render('index');
+});
+
+function ensureAuthenticated(req, res, next){
+  if(req.isAuthenticated()){
+    return next;
+  }else{
+    req.flash('error_msg', 'You are not logged in. <br> Please login');
+    res.redirect('login');
+  }
+}
+
 // simple route to show an HTML page
 
 
@@ -413,10 +428,7 @@ passport.use(new LocalStrategy({
       if(!user){
         return done(null, false, {message: 'Unknown User'});
       }
-      console.log(user);
-      console.log("****");
-      console.log(user.password);
-      console.log("****");
+      //should remove this by findOne instead of find
       User.comparePassword(password, user.password, function(err, isMatch){
         if(err) throw err;
         if(isMatch){
@@ -532,6 +544,13 @@ router.post('/login',
  * @param  {String} req.params.id - The animalId
  * @return {Object} JSON
  */
+
+router.get('/logout', function(req, res){
+  req.logout();
+
+  req.flash('success_msg', 'You are logged out.');
+  res.redirect('login');
+});
 
 router.get('/api/delete/:id', function(req, res){
 

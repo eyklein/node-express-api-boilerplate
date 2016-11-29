@@ -1,1 +1,82 @@
-index@
+<!-- {{#if errors}}
+	{{#each errors}}
+		<div class='alert alert-danger'>{{msg}}</div>
+	{{/each}}
+{{/if}} -->
+
+<!-- 
+<script src="http://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.0/TweenMax.min.js"></script>
+
+	
+
+	<script src="//cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.5/ScrollMagic.min.js"></script>
+
+	<script src="//cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.5/plugins/debug.addIndicators.min.js"></script>
+	
+	<script src="//cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.5/plugins/animation.gsap.js"></script>
+ -->
+	
+
+
+<style type="text/css">
+input{
+    border: none;
+    background: transparent;
+}
+</style>
+
+
+
+<div class="bcg-parallax">
+	<div id="bcg" class="bcg">
+	</div>
+	<div class="content-wrapper">
+		<h1 class="center-text question">Who are you?</h1>
+		<!-- <h1 class="answer">a student</h1> -->
+		<form id="newUser" method="POST">
+			<div class="answer-input form-group">
+			<!-- <label>Name:</label> -->
+			<input type="text" id="whoAreYou" name="whoAreYou" placeholder="a student" value={{fields.whoAreYou}}>
+			</div>
+		</form>
+	</div>
+</div>
+
+
+
+
+
+
+<div class="bcg-parallax">
+	<div id="bcg" class="bcg">
+	</div>
+	<div class="content-wrapper">
+		<h1 class="center-text">About</h1>
+		<p1 class="basic-text">We are a Jewish non-denominational organization which promotes the development of healthy conscious and intimate relationships through authenticity, courage, and acceptance.
+		</p1><br><br><hr>
+
+		<h2 class="">Authenticity</h2>
+		<p1 class="basic-text">We strive to live by our inner truths not pretending to be someone else or hiding what we dislike about ourselves.</p1>
+		<h2 class="">Courage</h2>
+		<p1 class="basic-text">To face ourselves and engage with others intimately we must be courageous and willing to examine the "good", "bad", and vulnerable within ourselves.
+		</p1>
+		<h2 class="">Acceptance</h2>
+		<p1 class="basic-text">We strive to live as individuals and a community which accepts the realities of our lives. We accept ourselfs, the people around us, and our world as they are. Then can we make choices which are grounded in ourselves and our values.</p1>
+		<!-- <h1 class="answer">a student</h1> -->
+		
+	</div>
+</div>
+
+<script type="text/javascript">
+document.getElementById("whoAreYou").focus();
+
+// whoAreYou
+
+
+var whoAreYouOptions=["a lover", "a student", "a doctor", "an angry person", "a friendly person", "a son", "a brother", "a sister"];
+document.getElementById("whoAreYou").placeholder=whoAreYouOptions[Math.floor(Math.random()*whoAreYouOptions.length)]; 
+
+setInterval(function(){ 
+	document.getElementById("whoAreYou").placeholder=whoAreYouOptions[Math.floor(Math.random()*whoAreYouOptions.length)]; 
+}, 5000);
+</script>
