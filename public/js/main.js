@@ -2,6 +2,71 @@
 /* When the user clicks on the button, 
 toggle between hiding and showing the dropdown content */
 
+
+// $(document).ready(function(){ 
+// 	var height = window.innerHeight;
+// 	var padding=height/2-30;
+// 	$('#page1').css("paddingTop" , padding + 'px' );
+// })
+
+// $('#page1').text("hi")
+
+var scrollDistance=0;
+$(window).scroll(function(){
+	scrollDistance=$(window).scrollTop();
+    // height = window.innerHeight;
+    // padding=height/2-30;
+    // $('#page1').text("hi")
+	// $('#page1').css("paddingTop" , padding + 'px' );
+	// console.log($(window).scrollTop())
+	// if(scrollDistance>5){
+	// 	$("#header").css("paddingTop" , 0 + 'px' );
+	// 	$("#header").css("paddingBottom" , 0 + 'px' );
+	// }else{
+		
+	// 	$("#header").css("paddingTop" , 20 + 'px' );
+	// 	$("#header").css("paddingBottom" , 20 + 'px' );
+		
+	// }
+
+
+	if(scrollDistance>5){
+		var $this= $("#header");
+		TweenLite.to($this, .5, {paddingBottom:0})
+		TweenLite.to($this, .5, {paddingTop:0})
+		
+	}else{
+		
+		var $this= $("#header");
+		TweenLite.to($this, .5, {paddingBottom:20})
+		TweenLite.to($this, .5, {paddingTop:20})
+		
+	}
+
+		
+
+
+
+
+	// $("#header").click(function(){
+	//   var $this = $(this),
+	//       $content = $this.find(".content");
+	//   if(!$this.hasClass("closed")){
+	//     TweenLite.to($content, 0.2, {height:0})
+	//     $this.addClass("closed")
+	//   }else{
+	//     TweenLite.set($content, {height:"auto"})
+	//     TweenLite.from($content, 0.2, {height:0})
+	//     $this.removeClass("closed");
+	//   }
+	// })
+});
+
+
+
+
+
+
 function myFunction() {
 	document.getElementById("myDropdown").classList.toggle("show");
 }
@@ -54,3 +119,7 @@ var scene = new ScrollMagic.Scene({triggerElement: ".trigger", duration: 300})
 							.setTween(".content-wrapper", {borderTop: "30px solid white", backgroundColor: "blue", scale: 0.7}) // the tween durtion can be omitted and defaults to 1
 							// .addIndicators({name: "2 (duration: 300)"}) // add indicators (requires plugin)
 							.addTo(controller);
+
+
+
+

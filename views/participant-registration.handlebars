@@ -1,0 +1,41 @@
+<script>
+// var user={{{fields.name}}};
+
+</script>
+
+
+<div class="page" id="pageLogin">
+  
+    <form action="/login">
+        <input type="submit" class="btn btn-secondary" value="Log In" />
+    </form>
+<h2 class="page-header">New User</h2>
+
+
+{{#if errors}}
+  {{#each errors}}
+    <div class='alert alert-danger'>{{msg}}</div>
+  {{/each}}
+{{/if}}
+<form id="newUser" method="POST">
+  <div class="form-group">
+    <label>Name:</label><br>
+    <input type="text" id="name" name="name" class="form-control" vcard_name="vCard.FirstName" placeholder={{{user.name}}} value={{{user.name}}} disabled><br>
+    <label>Prefered Name:</label>
+    <input type="text" id="name" name="name" class="form-control" vcard_name="vCard.FirstName" placeholder={{{user.name}}} value={{{user.name}}}><br>
+    <label>Email:</label>
+    <input type="text" id="email" name="email" class="form-control" placeholder="Email" value={{fields.email}}><br>
+    <label>Password:</label>
+    <input type="password" id="password" class="form-control" name="password" placeholder="Password" value={{fields.password}}><br>
+    <label>Confirm Password:</label>
+    <input type="password" id="password2" class="form-control" name="password2" placeholder="Password"><br>
+    <label>Birth Date (mm/dd/yyyy):</label>
+    <input type="text" id="birth_date" class="form-control" name="birthday" placeholder="(mm/dd/yyyy)" value={{fields.birth_date}}><br>
+    <label>Gender: </label>
+    <input type="text" id="gender" class="form-control" name="gender" placeholder="Gender"><br>
+    <input type="submit" class="btn btn-primary" value="Submit" >
+  </div>
+</form>
+</div>
+
+ 

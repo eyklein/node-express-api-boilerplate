@@ -14,6 +14,7 @@ var LocalStrategy=require('passport-local').Strategy;
 // our db model
 //var Participant = require("../models/model.js");
 var User = require("../models/user.js");
+var WhoAreYou = require("../models/whoAreYou.js");
 
 
 router.get('/register', function(req,res){
@@ -27,6 +28,10 @@ router.get('/login', function(req,res){
 
 router.get('/', function(req, res) {
   res.render('index');
+});
+
+router.get('/participant-registration', function(req, res) {
+  res.render('participant-registration');
 });
 
 
@@ -97,6 +102,57 @@ function ensureAuthenticated(req, res, next){
 //     })  
 // });
 
+
+
+
+
+// router.get('/userInfo'){
+//   Handlebars.registerHelper('json', function (content) {
+//     return JSON.stringify(content);
+//   });
+// }
+
+
+
+router.post('/api/addWhoAreYou', function(req, res){
+    console.log("here1")
+    var whoAreYou = req.body.whoAreYou;
+    var submitter = req.body.submitter;
+    console.log(req.body.whoAreYou)
+    console.log(submitter)
+    var whoAreYouObj = {
+      whoAreYou:whoAreYou,
+      submitter:submitter
+    };
+    console.log("here2")
+
+    // create a new user model instance, passing in the object
+    var newWhoAreYou = new WhoAreYou(whoAreYouObj);
+    console.log(newWhoAreYou)
+    // now, save that animal instance to the database
+    // mongoose method, see http://mongoosejs.com/docs/api.html#model_Model-save    
+    WhoAreYou.addNewWhoAreYou(newWhoAreYou ,function(err,data){
+      // console.log(whoAreYouData)
+      // if err saving, respond back with error
+      if (err){
+        var error = {status:'ERROR', message: 'Error saving new user', info: err};
+        return res.json(error);
+      }
+
+      // console.log('saved a new partisipant!');
+      // console.log(data);
+
+      // now return the json data of the new partisipant
+      var jsonData = {
+        status: 'OK',
+        WhoAreYou: whoAreYouObj
+      }
+
+      return res.json(jsonData);
+
+    })  
+    // console.log("here4")
+});
 
 
 // router.get('/api/get/:id', function(req, res){
@@ -356,7 +412,8 @@ router.post('/register', function(req, res){
 
 
     if(errors){
-      console.log('render error!!!!')
+      console.log('errors');
+      console.log(errors);
       //return res.json(errors);
       return res.render('register',{
         errors:errors,
@@ -423,6 +480,7 @@ passport.use(new LocalStrategy({
   usernameField: 'email',
   passwordField: 'password'
   },function(email, password, done) {
+    console.log(done.Function)
     User.getUserByEmail(email,function(err,user){
       if(err) throw err;
       if(!user){
@@ -434,7 +492,15 @@ passport.use(new LocalStrategy({
         if(isMatch){
           return done(null, user);
         }else{
-          return done(null, false, {message: 'Invalid Password'});
+          // var errors=[{ param: 'name', msg: 'Password is Incorect', value: '' }];
+          return done(null, false, {message: 'Password is Incorect'});
+          // console.log(errors);
+          // return done(null, false, {errors: errors});
+
+          // return res.render('login',{
+          //   errors:err,
+          //   // fields:login
+          // });
         }
       })
     });
@@ -460,8 +526,26 @@ router.post('/login',
     // If this function gets called, authentication was successful.
     // `req.user` contains the authenticated user.
 
-    console.log("444444?");
+    // req.checkBody({
+    //   'email': {
+    //     notEmpty: true,
+    //     errorMessage: 'Must enter an email',
+    //     optional: {
+    //       options: { checkFalsy: true } // end here if not email no need to return more errors
+    //     },
+    //     isLength: {
+    //       options: [{ min: 2, max: 40 }],
+    //       errorMessage: 'email be between at least 2 chars long' // Error message for the validator, takes precedent over parameter message
+    //     },
+    //     isEmail: {
+    //       errorMessage: 'Invalid Email'
+    //     }
+    //   }
+    // });
+    // req.checkBody('password', 'Password is required').notEmpty();
+
     res.redirect('/');
+    // res.redirect('/',{errors:{ param: 'name', msg: 'Password is Incorect', value: '' }});
   });
 
 // router.post('/login', function(req, res){

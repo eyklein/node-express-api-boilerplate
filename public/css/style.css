@@ -21,11 +21,25 @@ body {
   padding-left: 15px;
 
 }
+.myHeader{
+  padding-bottom: 20px;
+  padding-top:20px;
+
+  border-bottom: 1px solid #e5e5e5;
+  z-index: 999;
+  /*width:100%;*/
+  background-color: white;
+
+}
 
 /* Custom page header */
 .header {
   padding-bottom: 20px;
+  padding-top:20px;
+
   border-bottom: 1px solid #e5e5e5;
+  z-index: 99999;
+
 }
 /* Make the masthead heading the same height as the navigation */
 .header h3 {
@@ -48,7 +62,7 @@ body {
   }
 }
 .container-narrow > hr {
-  margin: 30px 0;
+  margin: 0px 0;
 }
 
 /* Main marketing message and sign up button */
@@ -84,7 +98,11 @@ body {
   
   /* Space out the masthead */
   .header {
-    margin-bottom: 30px;
+    /*margin-bottom: 30px;*/
+    /*width:100%;*/
+    background-color: blue;
+    /*margin-left: -10;*/
+
   }
   /* Remove the bottom border on the jumbotron for visual effect */
   .jumbotron {
@@ -175,14 +193,17 @@ body {
 /* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
 .show {display:block;}
 
-.myHeader{
-    height: auto;
+.myDroppdown{
+    /*height: auto;*/
     /*float: right;*/
-    right:10px;
+    right:0px;
     /*margin: 10px;*/
-    padding: 9px;
+    padding: 0px;
 
     font-size: 120%;
+
+    padding-top:10px;
+    
    /* padding-left: auto;
     padding-right: auto;*/
     /*padding-left:350px;*/
@@ -209,28 +230,47 @@ body {
 }
 .answer-input{
   font-size: 200%;
-  padding-left: 300px;
+  /*padding-left: 300px;*/
   border: 0px solid;
-border-width:0px;
-border:none;
+  border-width:0px;
+  border:none;
+  padding: 0px;
+  margin: 0px;
+  
+
+  /*margin: 0 auto;*/
   /*background-color: red;*/
+}
+.red{
+  background-color: yellow;
+  height: 400px;
+  padding: 0px;
+  margin: 0px;
+  
+ 
 }
 
 textarea:focus, input:focus{
     outline: 0 none;
 
 }
-.lock{
+.fix{
   position:fixed;
-  background-color: white;
+  /*background-color: white;*/
   /*width:100;*/
-  width: 750px;
+  /*width: 750px;*/
+  max-width: 750px;
+
   top:0;
-  padding-top: 20px;
+
+
+  /*padding-top: 20px;*/
 }
 
-.bcg-parallax{
 
+
+.bcg-parallax{
+  /*background-color: blue;*/
   /*background-color: #000;*/
   padding-top: 300px;
   padding-bottom: 200px;
@@ -239,6 +279,53 @@ textarea:focus, input:focus{
   overflow: hidden;
 
 }
+
+.page{
+  /*height: 100%;*/
+  min-height: 90%;
+
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  /*background-color: red;*/
+
+
+
+}
+.page-first{
+  /*height: 100%;*/
+  min-height: 80%;
+
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  /*background-color: red;*/
+
+
+
+}
+.buttonDiv{
+  margin-top:0px;
+  z-index: 99999999;
+}
+.down-button{
+  height:30px; 
+  width:auto;
+  display: block;
+  
+  margin-left: auto;
+  margin-right: auto;
+  cursor: pointer;;
+  z-index: 99999999;
+
+}
+#page1{
+
+}
+#page2{
+  padding-top: 30;
+}
+
 .bcg{
   background: url('') no-repeat;
   background-size: cover;
@@ -247,7 +334,7 @@ textarea:focus, input:focus{
   opacity:.7;
 }
 .content-wrapper{
-  width90%;
+
   margin: auto;
   max-width: 1114px;
   z-index: 1;
@@ -262,6 +349,26 @@ h1{
 }
 h2{
   font-size: 200%;
+}
+div{
+  cursor: default;
+}
+
+#pageLogin{
+  /*padding-top: 100px;*/
+
+
+}
+.space-top{
+  padding-top: 80px;
+}
+label{
+  float:left;
+}
+h3{
+  float: left;
+  width:100%;
+  text-align: left;
 }
 
 

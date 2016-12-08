@@ -40,6 +40,10 @@ module.exports.comparePassword = function(candidatePassword, hash, callBack){
 	})
 }
 
+
+
+
+
 // module.exports.getUserById = function(id, callBack){
 	
 // 	User.FindById(id, callBack);

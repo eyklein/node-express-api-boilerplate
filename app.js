@@ -82,6 +82,20 @@ app.use(function(req, res, next){
   res.locals.success_msg = req.flash('success_msg');
   res.locals.error_msg = req.flash('error_msg');
   res.locals.error = req.flash('error');
+  res.locals.errors = req.flash('error');
+
+
+  // console.log("success_msg");
+  // console.log(res.locals.success_msg);
+  // console.log("error_msg");
+  // console.log(res.locals.error_msg);
+  // console.log("error");
+  // console.log(res.locals.error);
+  // console.log("errors");
+  // console.log(res.locals.errors);
+
+
+
   res.locals.user = req.user || null;
   next();
 });

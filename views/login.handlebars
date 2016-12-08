@@ -1,19 +1,48 @@
-<h2 class="page-header">Log In</h2>
 
-{{#if errors}}
-	{{#each errors}}
-		<div class='alert alert-danger'>{{msg}}</div>
-	{{/each}}
-{{/if}}
+
+<div class="page" id="pageLogin">
+	
+		<form action="/register">
+		    <input type="submit" class="btn btn-secondary" value="New User" />
+		</form>
+		
+
+	<h2 class="page-header">Log In</h2>
+
+
+	<!-- {{#if errors}}
+		{{#each errors}}
+			<div class='alert alert-danger'>{{msg}}</div>
+		{{/each}}
+	{{/if}} -->
+	{{#if success_msg}}
+		<div class="alert alert-success">
+			{{success_msg}}
+		</div>
+		{{/if}}
+		{{#if error_msg}}
+		<div class="alert alert-danger">
+			{{error_msg}}
+		</div>
+		{{/if}}
+		{{#if error}}
+		<div class="alert alert-danger">
+			{{error}}
+		</div>
+		{{/if}}
+
+
+	
 <form id="login" method="POST">
 	<div class="form-group">
 		<label>Email:</label>
 		<input type="text" id="email" name="email" class="form-control" placeholder="Email" value={{fields.email}}><br>
 		<label>Password:</label>
 		<input type="password" id="password" class="form-control" name="password" placeholder="Password"><br>
-		<input type="submit" value="Submit" >
+		<input type="submit" class="btn btn-primary" value="Submit" >
 	</div>
 </form>
+</div>
 
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>

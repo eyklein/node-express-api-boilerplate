@@ -1,82 +1,173 @@
-<!-- {{#if errors}}
-	{{#each errors}}
-		<div class='alert alert-danger'>{{msg}}</div>
-	{{/each}}
-{{/if}} -->
 
-<!-- 
-<script src="http://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.0/TweenMax.min.js"></script>
-
-	
-
-	<script src="//cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.5/ScrollMagic.min.js"></script>
-
-	<script src="//cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.5/plugins/debug.addIndicators.min.js"></script>
-	
-	<script src="//cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.5/plugins/animation.gsap.js"></script>
- -->
-	
 
 
 <style type="text/css">
 input{
-    border: none;
-    background: transparent;
+	border: none;
+	background: transparent;
+	float:left;
+	/*left:0;*/
+	/*background-color: red;*/
+	/*width:100%;*/
+	padding: 0px;
+	margin: 0px;
+	z-index: 9999;
+	autocomplete:'off';
+
 }
 </style>
-
-
-
-<div class="bcg-parallax">
-	<div id="bcg" class="bcg">
-	</div>
-	<div class="content-wrapper">
-		<h1 class="center-text question">Who are you?</h1>
-		<!-- <h1 class="answer">a student</h1> -->
-		<form id="newUser" method="POST">
-			<div class="answer-input form-group">
-			<!-- <label>Name:</label> -->
-			<input type="text" id="whoAreYou" name="whoAreYou" placeholder="a student" value={{fields.whoAreYou}}>
-			</div>
-		</form>
-	</div>
-</div>
-
-
-
-
-
-
-<div class="bcg-parallax">
-	<div id="bcg" class="bcg">
-	</div>
-	<div class="content-wrapper">
-		<h1 class="center-text">About</h1>
-		<p1 class="basic-text">We are a Jewish non-denominational organization which promotes the development of healthy conscious and intimate relationships through authenticity, courage, and acceptance.
-		</p1><br><br><hr>
-
-		<h2 class="">Authenticity</h2>
-		<p1 class="basic-text">We strive to live by our inner truths not pretending to be someone else or hiding what we dislike about ourselves.</p1>
-		<h2 class="">Courage</h2>
-		<p1 class="basic-text">To face ourselves and engage with others intimately we must be courageous and willing to examine the "good", "bad", and vulnerable within ourselves.
-		</p1>
-		<h2 class="">Acceptance</h2>
-		<p1 class="basic-text">We strive to live as individuals and a community which accepts the realities of our lives. We accept ourselfs, the people around us, and our world as they are. Then can we make choices which are grounded in ourselves and our values.</p1>
-		<!-- <h1 class="answer">a student</h1> -->
-		
-	</div>
-</div>
-
 <script type="text/javascript">
-document.getElementById("whoAreYou").focus();
+
+$(document).ready(function(){ 
+	var height = window.innerHeight;
+	padding=window.innerHeight/3-$('#question').height()/2;
+	$('#page1').css("paddingTop" , padding + 'px' );
+})
+
+	// $('#page1').text("hi")
+
+
+	$(window).resize(function(){
+		height = window.innerHeight;
+		padding=window.innerHeight/3-$('#question').height()/2;
+	    $('#page1').css("paddingTop" , padding + 'px' );
+		// $('#page1').css("height" , height + 'px' );
+		console.log(height +":"+padding + 'px' )
+	});
+
+
+
+	//returns the current horizontal scroll position
+
+
+	</script>
+
+
+
+
+	<!-- <div class="page" id="page1"> -->
+	<div class="page page-first" id="page1">
+
+		<div class="content-wrapper">
+
+			<h1 class="center-text question" id="question">Who are you?</h1>
+			<!-- <h1 class="answer">a student</h1> -->
+			<form id="whoAreYouForm" method="POST">
+				<div class="col-xs-6"></div>
+				<div class="answer-input form-group col-xs-1 ">
+					<!-- <label>Name:</label> -->
+					<input type="text" id="whoAreYou" name="whoAreYou" placeholder="a student" autocomplete="off">
+				</div>
+			</form>
+		</div>
+
+
+	</div>
+	<div class="buttonDiv" style="width:100%;">
+		<img id="page2button" class="down-button" src="/img/down-arrow.png" style="height:30px; width:auto;">
+	</div>
+
+
+
+
+
+
+	<div class="page" id="page2">
+
+		<div class="content-wrapper">
+			<h1 class="center-text">About Us</h1>
+			<p1 class="basic-text">We are a Jewish non-denominational organization which promotes the development of healthy conscious and intimate relationships through authenticity, courage, and acceptance.
+			</p1><br><br><hr>
+
+			<h2 class="">Authenticity</h2>
+			<p1 class="basic-text">We strive to live by our inner truths not pretending to be someone else or hiding what we dislike about ourselves.</p1>
+			<h2 class="">Courage</h2>
+			<p1 class="basic-text">To face ourselves and engage with others intimately we must be courageous and willing to examine the "good", "bad", and vulnerable within ourselves.
+			</p1>
+			<h2 class="">Acceptance</h2>
+			<p1 class="basic-text">We strive to live as individuals and a community which accepts the realities of our lives. We accept ourselfs, the people around us, and our world as they are. Then can we make choices which are grounded in ourselves and our values.</p1>
+			<!-- <h1 class="answer">a student</h1> -->
+
+		</div>
+	</div>
+
+	<script type="text/javascript">
+	document.getElementById("whoAreYou").focus();
 
 // whoAreYou
 
 
-var whoAreYouOptions=["a lover", "a student", "a doctor", "an angry person", "a friendly person", "a son", "a brother", "a sister"];
+var whoAreYouOptions=["a lover", "a student", "a doctor", "an angry person", "a friendly person", "a son", "a brother", "a sister", "a kind person", "a listener", "a happy person", "a confussed person", "a man", "a woman"];
 document.getElementById("whoAreYou").placeholder=whoAreYouOptions[Math.floor(Math.random()*whoAreYouOptions.length)]; 
 
 setInterval(function(){ 
 	document.getElementById("whoAreYou").placeholder=whoAreYouOptions[Math.floor(Math.random()*whoAreYouOptions.length)]; 
 }, 5000);
+
+
+
+function getScrollX() {
+	return (window.pageXOffset != null) ? window.pageXOffset : (document.documentElement.scrollLeft != null) ? document.documentElement.scrollLeft : document.body.scrollLeft;
+}
+//returns the current vertical scroll position
+function getScrollY() {
+	return (window.pageYOffset != null) ? window.pageYOffset : (document.documentElement.scrollTop != null) ? document.documentElement.scrollTop : document.body.scrollTop;
+}
+
+$("#page2button").click(function(e) {
+	var curScroll = {x:getScrollX(), y:getScrollY()};
+	console.log($("#page2button").offset());
+
+	TweenLite.to(curScroll, 1, {y:$("#page2button").offset().top, onUpdate:function() { window.scrollTo(curScroll.x, curScroll.y); }});
+});
+</script>
+
+
+
+
+
+
+<script type="text/javascript">
+$("#whoAreYouForm").submit(function(e){
+  //console.log(e);
+
+  var submition = $("#whoAreYou").val();
+  var submitter = userName;
+  
+  
+  
+  var data = {
+  	whoAreYou : submition,
+  	submitter : submitter
+
+  };
+
+  console.log(data);
+
+  jQuery.ajax({
+  	url : '/api/addWhoAreYou',
+  	dataType : 'json',
+  	type : 'POST',
+  	data : data,
+  	success : function(response){
+        // success
+        console.log('success in posting');
+        console.log(response);
+        $("#whoAreYou").val("");
+        whoAreYouOptions.push(submition);
+        // now, clear the input fields
+        // jQuery("#candidateForm input").val('');
+    },
+    error : function(err){
+      // do error checking
+      alert("something went wrong");
+      console.error(err);
+  }
+});
+
+  // prevents the form from submitting normally
+  e.preventDefault();
+  return false;
+
+})
 </script>
